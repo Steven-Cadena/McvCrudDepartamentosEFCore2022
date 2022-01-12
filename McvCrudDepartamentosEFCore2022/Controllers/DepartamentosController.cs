@@ -27,5 +27,32 @@ namespace McvCrudDepartamentosEFCore2022.Controllers
             Departamento departamento = this.repo.FindDepartamento(id);
             return View(departamento);
         }
+
+        public IActionResult Create() 
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Departamento departamento) 
+        {
+            this.repo.InsertarDepartamento(departamento.Nombre, departamento.Localidad);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int id) 
+        {
+            this.repo.DeleteDepartamento(id);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Edit(int id) 
+        {
+            Departamento departamento = this.repo.FindDepartamento(id);
+            return View(departamento);
+        }
+        [HttpPost]
+        public IActionResult Edit(Departamento departamento) 
+        {
+            this.repo.UpdateDepartamento(departamento.IdDepartamento, departamento.Nombre, departamento.Localidad);
+            return RedirectToAction("Index");
+        }
     }
 }

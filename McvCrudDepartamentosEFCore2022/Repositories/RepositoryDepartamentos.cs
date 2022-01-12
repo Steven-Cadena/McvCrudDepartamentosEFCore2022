@@ -31,5 +31,47 @@ namespace McvCrudDepartamentosEFCore2022.Repositories
             //SOLO SIRVE SI DEVUELVES UN OBJETO
             return consulta.FirstOrDefault();
         }
+        //METODO PARA OBTENER EL ID MAXIMO DE DEPARTAMENTO
+        private int GetMaxIdDepartamento() 
+        {
+            //SI LA TABLA NO TUVIERA REGISTRO ESTO NOS DA EXCEPCION PORQUE NO PUEDE RECUPERAR DE NULL
+
+            //NECESITAMOS UN LAMBDA PARA RECUPERAR EL MAXIMO
+            //DE LA COLECCION DbSet DE DEPARTAMENTOS
+            int maximo = this.context.Departamentos.Max(x => x.IdDepartamento) + 1;
+            return maximo;
+        }
+
+        public void InsertarDepartamento(string nombre,string localidad) 
+        {
+            Departamento departamento = new Departamento();
+            departamento.IdDepartamento = this.GetMaxIdDepartamento();
+            departamento.Nombre = nombre;
+            departamento.Localidad = localidad;
+            //agregamos la dbset de departamentos
+            this.context.Departamentos.Add(departamento);
+            //guardamos los cambios
+            this.context.SaveChanges();
+        }
+        public void DeleteDepartamento(int id) 
+        {
+            //BUSCAMOS ELOBJETO/OBJETOS A ELIMINAR
+            Departamento departamento = this.FindDepartamento(id);
+            //hacemos la accion 
+            this.context.Departamentos.Remove(departamento);
+            //y guardamos los cambios para almacenarlos en la BBDD 
+            this.context.SaveChanges();
+        }
+
+        public void UpdateDepartamento(int id, string nombre, string localidad) 
+        {
+            //buscamos el departamento
+            Departamento departamento = this.FindDepartamento(id);
+            //modificamos los datos 
+            departamento.Nombre = nombre;
+            departamento.Localidad = localidad;
+            //guardamos los cambios
+            this.context.SaveChanges();
+        }
     }
 }

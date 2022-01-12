@@ -26,8 +26,12 @@ namespace McvCrudDepartamentosEFCore2022
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             /****************IMPORTANTE**********/
             string cadena = this.Configuration.GetConnectionString("cadenalocalhospital");
+
+            services.AddTransient<RepositoryEmpleados>();
+            services.AddDbContext<EmpleadosContext>(options => options.UseSqlServer(cadena));
             services.AddTransient<RepositoryDepartamentos>();
             services.AddDbContext<DepartamentosContext>(options => options.UseSqlServer(cadena));
             services.AddControllersWithViews();
