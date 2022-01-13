@@ -1,0 +1,64 @@
+﻿@model ResumenEmpleados
+
+@{
+    ViewData["Title"] = "EmpleadosResumen";
+}
+
+<h1>Empleados Resumen</h1>
+
+<h2 style="color:blue">
+    @ViewBag.Mensaje
+</h2>
+
+@if (Model != null)
+{
+    <div style="color:red">
+        <h1>Suma Salarial: @Model.SumaSalarial</h1>
+        <h1>Media Salarial: @Model.MediaSalarial</h1>
+        <h1>Máximo Salario: @Model.MaximoSalario</h1>
+    </div>
+
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>ID EMPLEADO </th>
+                <th>APELLIDO</th>
+                <th>OFICIO</th>
+                <th>FECHA ALTA</th>
+                <th>SALARIO</th>
+                <th>DEPARTAMENTO</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Empleados)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdEmpleado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Oficio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaAlta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDepartamento)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
